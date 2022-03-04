@@ -6,40 +6,51 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PopularMovieView: View {
+    let movie: Movie
+
     var body: some View {
         VStack {
-            ZStack {
+            KFImage
+                .url(URL(string: movie.image))
+                .placeholder {
+                    Image("placeholder")
+                        .resizable()
+                        .opacity(0.3)
 
-            }
-            .frame(maxWidth: .infinity, maxHeight: 85)
-            .background(Color.pink)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+                        //.clipped()
+                }
+                .fade(duration: 0.25)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, minHeight: 125)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
 
-            Text("Wonder Woman")
+            Text(movie.title)
                 .foregroundColor(.white)
                 .font(.system(size: 16))
 
-            Text("Comedy, Family")
+            Text(movie.genres)
                 .foregroundColor(.gray)
                 .font(.system(size: 14))
         }
     }
 }
 
-struct PopularMovieView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            HStack(spacing: 32) {
-                PopularMovieView()
-
-                PopularMovieView()
-            }
-            .padding(.horizontal, 32)
-
-            Spacer()
-        }
-        .background(Color.background)
-    }
-}
+//struct PopularMovieView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            HStack(spacing: 32) {
+//                PopularMovieView()
+//
+//                PopularMovieView()
+//            }
+//            .padding(.horizontal, 32)
+//
+//            Spacer()
+//        }
+//        .background(Color.background)
+//    }
+//}

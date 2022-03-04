@@ -12,7 +12,7 @@ protocol ExploreScreenDelegate {
 }
 
 struct ExploreScreen: View {
-    @State var query = ""
+    @StateObject var viewModel = ExploreViewModel()
     @FocusState var searchFieldIsFocused: Bool
 
     var body: some View {
@@ -20,7 +20,7 @@ struct ExploreScreen: View {
             HStack(spacing: 29) {
                 HStack(spacing: 23) {
                     Image("search")
-                    TextField("Search", text: $query)
+                    TextField("Search", text: $viewModel.query)
                 }
                 .focused($searchFieldIsFocused)
                 .padding()
@@ -31,7 +31,7 @@ struct ExploreScreen: View {
                 if searchFieldIsFocused {
                     Button("Cancel"){
                         searchFieldIsFocused = false
-                        query = ""
+                        viewModel.query = ""
                     }
                     .transition(.opacity)
                     .foregroundColor(.label)
@@ -43,11 +43,40 @@ struct ExploreScreen: View {
 
             ScrollView {
                 LazyVStack {
-                    //Staggered Grid
+                    switch viewModel.state.popularMovies {
+                    case .success(let movies):
+                        HStack(alignment: .top, spacing: 32) {
+                            LazyVStack {
+                                let indices = movies.indices.compactMap { index in
+                                    index % 2 == 0 ? index : nil
+                                }
+
+                                ForEach(indices, id: \.self) { index in
+                                    PopularMovieView(movie: movies[index])
+                                }
+                            }
+
+                            LazyVStack {
+                                let indices = movies.indices.compactMap { index in
+                                    index % 2 == 1 ? index : nil
+                                }
+
+                                ForEach(indices, id: \.self) { index in
+                                    PopularMovieView(movie: movies[index])
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 32)
+                    default:
+                        ProgressView()
+                    }
                 }
             }
         }
         .background(Color.background)
+        .onAppear {
+            viewModel.loadPopularMovies()
+        }
     }
 }
 

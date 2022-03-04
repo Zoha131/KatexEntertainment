@@ -26,6 +26,7 @@
 		C466D10227D228BD00288C8D /* PopularMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D10127D228BD00288C8D /* PopularMovieView.swift */; };
 		C466D10427D228CB00288C8D /* SearchMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D10327D228CB00288C8D /* SearchMovieView.swift */; };
 		C47D3B1527D292AE006552C8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C47D3B1427D292AE006552C8 /* Kingfisher */; };
+		C47D3B1727D2AC78006552C8 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47D3B1627D2AC77006552C8 /* Async.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		C466D0FF27D228AE00288C8D /* HistoryMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMovieView.swift; sourceTree = "<group>"; };
 		C466D10127D228BD00288C8D /* PopularMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieView.swift; sourceTree = "<group>"; };
 		C466D10327D228CB00288C8D /* SearchMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieView.swift; sourceTree = "<group>"; };
+		C47D3B1627D2AC77006552C8 /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 				C466D0E627D1D82C00288C8D /* MovieDetail.swift */,
 				C466D0EE27D1FFC000288C8D /* Actor.swift */,
 				C466D0F027D200FF00288C8D /* KatexError.swift */,
+				C47D3B1627D2AC77006552C8 /* Async.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				C466D0F527D2044200288C8D /* ExploreViewModel.swift in Sources */,
 				C466D10427D228CB00288C8D /* SearchMovieView.swift in Sources */,
 				C466D0C527D1322100288C8D /* AppDelegate.swift in Sources */,
+				C47D3B1727D2AC78006552C8 /* Async.swift in Sources */,
 				C466D10027D228AE00288C8D /* HistoryMovieView.swift in Sources */,
 				C466D0DE27D13D8200288C8D /* ExploreScreen.swift in Sources */,
 				C466D0D927D1392400288C8D /* Resource.swift in Sources */,

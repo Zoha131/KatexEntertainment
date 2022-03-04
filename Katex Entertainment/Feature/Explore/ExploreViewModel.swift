@@ -7,6 +7,12 @@
 
 import Foundation
 
+struct ExploreState {
+    var suggestions: Async<[Movie]> = .uninitialized
+    var popularMovies: Async<[Movie]> = .uninitialized
+}
+
+@MainActor
 class ExploreViewModel: ObservableObject {
     let movieClient = MovieClientImp(
         baseUrl: "https://imdb-api.com",
@@ -14,4 +20,24 @@ class ExploreViewModel: ObservableObject {
         urlSession: .shared,
         jsonDecoder: JSONDecoder()
     )
+
+    @Published private(set) var state = ExploreState()
+    @Published var query = ""
+
+    func loadPopularMovies() {
+        movieClient.getPopularMovies {[weak self] result in
+            guard let self = self else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let movies):
+                    self.state.popularMovies = .success(value: Array(movies[..<6]))
+                case .failure(let error):
+                    self.state.popularMovies = .failed(error: error)
+                }
+            }
+        }
+    }
 }
