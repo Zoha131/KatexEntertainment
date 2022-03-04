@@ -32,6 +32,10 @@ extension Color {
         Color("cardBackground")
     }
 
+    static var highlight: Color {
+        Color("highlight")
+    }
+
     static var label: Color {
         Color(UIColor.label)
     }
