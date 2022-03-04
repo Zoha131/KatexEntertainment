@@ -9,12 +9,37 @@ import SwiftUI
 
 struct PopularMovieView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ZStack {
+
+            }
+            .frame(maxWidth: .infinity, maxHeight: 85)
+            .background(Color.pink)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+
+            Text("Wonder Woman")
+                .foregroundColor(.white)
+                .font(.system(size: 16))
+
+            Text("Comedy, Family")
+                .foregroundColor(.gray)
+                .font(.system(size: 14))
+        }
     }
 }
 
 struct PopularMovieView_Previews: PreviewProvider {
     static var previews: some View {
-        PopularMovieView()
+        VStack {
+            HStack(spacing: 32) {
+                PopularMovieView()
+
+                PopularMovieView()
+            }
+            .padding(.horizontal, 32)
+
+            Spacer()
+        }
+        .background(Color.background)
     }
 }
