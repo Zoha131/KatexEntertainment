@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 extension UIColor {
     static var background: UIColor {
@@ -15,6 +16,24 @@ extension UIColor {
 
     static var accent: UIColor {
         UIColor(named: "AccentColor")!
+    }
+}
+
+extension Color {
+    static var background: Color {
+        Color(.background)
+    }
+
+    static var accent: Color {
+        Color(.accent)
+    }
+
+    static var cardBackground: Color {
+        Color("cardBackground")
+    }
+
+    static var label: Color {
+        Color(UIColor.label)
     }
 }
 

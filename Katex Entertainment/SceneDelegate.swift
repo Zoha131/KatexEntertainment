@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -27,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         homeViewController.tabBarItem.image = .home
         homeViewController.view.backgroundColor = .background
 
-        let exploreViewController = UIViewController()
+        let exploreViewController = UIHostingController(rootView: ExploreScreen())
         exploreViewController.tabBarItem.image = .explore
         exploreViewController.view.backgroundColor = .background
 
@@ -45,6 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             favoriteViewController,
             profileViewController
         ]
+        rootViewController.selectedIndex = 1
 
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.backgroundColor = .background
