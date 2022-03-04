@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct MovieDetailScreen: View {
+    let imageUrl = "https://imdb-api.com/images/original/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_Ratio0.6837_AL_.jpg"
+
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
@@ -15,27 +18,30 @@ struct MovieDetailScreen: View {
                     GeometryReader { reader in
                         let global = reader.frame(in: .global)
 
-                        ZStack {
-
-                        }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: UIScreen.main.bounds.height / 2.2 + max(0, global.minY))
-                        .background(Color.pink)
-                        .overlay {
-                            LinearGradient(
-                                colors: [
-                                    .clear,
-                                    .background.opacity(0.15),
-                                    .background.opacity(0.45),
-                                    .background
-                                ],
-                                startPoint: .top,
-                                endPoint: .bottom
-                            )
-                        }
-                        .offset(y: global.minY > 0 ? -global.minY : global.minY)
+                        KFImage
+                            .url(URL(string: imageUrl))
+                            .placeholder {
+                                Image("placeholder").opacity(0.3)
+                            }
+                            .fade(duration: 0.25)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: UIScreen.main.bounds.width + max(0, global.minY), alignment: .center)
+                            .clipped()
+                            .overlay {
+                                LinearGradient(
+                                    colors: [
+                                        .clear,
+                                        .background
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            }
+                            .offset(y: global.minY > 0 ? -global.minY : global.minY)
                     }
-                    .frame(height: UIScreen.main.bounds.height / 3.2)
+                    .frame(height: UIScreen.main.bounds.width - 100)
+                    
 
                     VStack(alignment: .center, spacing: 12) {
                         Text("Captain Marvel")
@@ -167,9 +173,9 @@ struct MovieDetailScreen: View {
 
                 } label: {
                     Image("favorite")
-                    .renderingMode(.template)
-                    .foregroundColor(.white)
-                    .frame(width: 38, height: 38)
+                        .renderingMode(.template)
+                        .foregroundColor(.white)
+                        .frame(width: 38, height: 38)
 
 
                 }
@@ -181,9 +187,9 @@ struct MovieDetailScreen: View {
 
                 } label: {
                     Text("Watch Now")
-                    .foregroundColor(.white)
-                    .frame(height: 38)
-                    .frame(maxWidth: .infinity)
+                        .foregroundColor(.white)
+                        .frame(height: 38)
+                        .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
                 .cornerRadius(20)
