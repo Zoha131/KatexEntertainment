@@ -11,6 +11,16 @@
 		C466D0C727D1322100288C8D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0C627D1322100288C8D /* SceneDelegate.swift */; };
 		C466D0CE27D1322300288C8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C466D0CD27D1322300288C8D /* Assets.xcassets */; };
 		C466D0D127D1322300288C8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C466D0CF27D1322300288C8D /* LaunchScreen.storyboard */; };
+		C466D0D927D1392400288C8D /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0D827D1392400288C8D /* Resource.swift */; };
+		C466D0DE27D13D8200288C8D /* ExploreScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0DD27D13D8200288C8D /* ExploreScreen.swift */; };
+		C466D0E527D1D78900288C8D /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0E427D1D78900288C8D /* Movie.swift */; };
+		C466D0E727D1D82C00288C8D /* MovieDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0E627D1D82C00288C8D /* MovieDetail.swift */; };
+		C466D0EB27D1EC0C00288C8D /* MovieClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0EA27D1EC0C00288C8D /* MovieClient.swift */; };
+		C466D0ED27D1FBD200288C8D /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0EC27D1FBD200288C8D /* MovieResponse.swift */; };
+		C466D0EF27D1FFC000288C8D /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0EE27D1FFC000288C8D /* Actor.swift */; };
+		C466D0F127D200FF00288C8D /* KatexError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0F027D200FF00288C8D /* KatexError.swift */; };
+		C466D0F327D2014E00288C8D /* MovieClientImp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0F227D2014E00288C8D /* MovieClientImp.swift */; };
+		C466D0F527D2044200288C8D /* ExploreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D0F427D2044200288C8D /* ExploreViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +30,17 @@
 		C466D0CD27D1322300288C8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C466D0D027D1322300288C8D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C466D0D227D1322300288C8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C466D0D827D1392400288C8D /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		C466D0DD27D13D8200288C8D /* ExploreScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreScreen.swift; sourceTree = "<group>"; };
+		C466D0DF27D1D50300288C8D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C466D0E427D1D78900288C8D /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		C466D0E627D1D82C00288C8D /* MovieDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetail.swift; sourceTree = "<group>"; };
+		C466D0EA27D1EC0C00288C8D /* MovieClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieClient.swift; sourceTree = "<group>"; };
+		C466D0EC27D1FBD200288C8D /* MovieResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieResponse.swift; sourceTree = "<group>"; };
+		C466D0EE27D1FFC000288C8D /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		C466D0F027D200FF00288C8D /* KatexError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KatexError.swift; sourceTree = "<group>"; };
+		C466D0F227D2014E00288C8D /* MovieClientImp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieClientImp.swift; sourceTree = "<group>"; };
+		C466D0F427D2044200288C8D /* ExploreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +57,7 @@
 		C466D0B827D1322100288C8D = {
 			isa = PBXGroup;
 			children = (
+				C466D0DF27D1D50300288C8D /* README.md */,
 				C466D0C327D1322100288C8D /* Katex Entertainment */,
 				C466D0C227D1322100288C8D /* Products */,
 			);
@@ -52,13 +74,79 @@
 		C466D0C327D1322100288C8D /* Katex Entertainment */ = {
 			isa = PBXGroup;
 			children = (
+				C466D0E227D1D6E200288C8D /* Data Source */,
+				C466D0E127D1D6D900288C8D /* Model */,
+				C466D0DC27D13C4400288C8D /* Design System */,
+				C466D0E327D1D70C00288C8D /* Feature */,
 				C466D0C427D1322100288C8D /* AppDelegate.swift */,
 				C466D0C627D1322100288C8D /* SceneDelegate.swift */,
-				C466D0CD27D1322300288C8D /* Assets.xcassets */,
-				C466D0CF27D1322300288C8D /* LaunchScreen.storyboard */,
 				C466D0D227D1322300288C8D /* Info.plist */,
+				C466D0E027D1D67D00288C8D /* Preview Content */,
 			);
 			path = "Katex Entertainment";
+			sourceTree = "<group>";
+		};
+		C466D0DA27D13C1600288C8D /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				C466D0DD27D13D8200288C8D /* ExploreScreen.swift */,
+				C466D0F427D2044200288C8D /* ExploreViewModel.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
+		C466D0DB27D13C2300288C8D /* Movie Details */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Movie Details";
+			sourceTree = "<group>";
+		};
+		C466D0DC27D13C4400288C8D /* Design System */ = {
+			isa = PBXGroup;
+			children = (
+				C466D0D827D1392400288C8D /* Resource.swift */,
+				C466D0CD27D1322300288C8D /* Assets.xcassets */,
+				C466D0CF27D1322300288C8D /* LaunchScreen.storyboard */,
+			);
+			path = "Design System";
+			sourceTree = "<group>";
+		};
+		C466D0E027D1D67D00288C8D /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C466D0E127D1D6D900288C8D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C466D0EC27D1FBD200288C8D /* MovieResponse.swift */,
+				C466D0E427D1D78900288C8D /* Movie.swift */,
+				C466D0E627D1D82C00288C8D /* MovieDetail.swift */,
+				C466D0EE27D1FFC000288C8D /* Actor.swift */,
+				C466D0F027D200FF00288C8D /* KatexError.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C466D0E227D1D6E200288C8D /* Data Source */ = {
+			isa = PBXGroup;
+			children = (
+				C466D0EA27D1EC0C00288C8D /* MovieClient.swift */,
+				C466D0F227D2014E00288C8D /* MovieClientImp.swift */,
+			);
+			path = "Data Source";
+			sourceTree = "<group>";
+		};
+		C466D0E327D1D70C00288C8D /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				C466D0DA27D13C1600288C8D /* Explore */,
+				C466D0DB27D13C2300288C8D /* Movie Details */,
+			);
+			path = Feature;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,8 +219,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C466D0F527D2044200288C8D /* ExploreViewModel.swift in Sources */,
 				C466D0C527D1322100288C8D /* AppDelegate.swift in Sources */,
+				C466D0DE27D13D8200288C8D /* ExploreScreen.swift in Sources */,
+				C466D0D927D1392400288C8D /* Resource.swift in Sources */,
+				C466D0EB27D1EC0C00288C8D /* MovieClient.swift in Sources */,
+				C466D0E727D1D82C00288C8D /* MovieDetail.swift in Sources */,
+				C466D0F327D2014E00288C8D /* MovieClientImp.swift in Sources */,
+				C466D0ED27D1FBD200288C8D /* MovieResponse.swift in Sources */,
+				C466D0F127D200FF00288C8D /* KatexError.swift in Sources */,
+				C466D0EF27D1FFC000288C8D /* Actor.swift in Sources */,
 				C466D0C727D1322100288C8D /* SceneDelegate.swift in Sources */,
+				C466D0E527D1D78900288C8D /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +371,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Katex Entertainment/Preview Content\"";
 				DEVELOPMENT_TEAM = 4UDSZ3HFA2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Katex Entertainment/Info.plist";
@@ -302,6 +401,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Katex Entertainment/Preview Content\"";
 				DEVELOPMENT_TEAM = 4UDSZ3HFA2;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Katex Entertainment/Info.plist";

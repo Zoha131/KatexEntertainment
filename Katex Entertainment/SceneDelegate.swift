@@ -11,12 +11,49 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    func scene(
+        _ scene: UIScene,
+        willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+
+        window = UIWindow(windowScene: windowScene)
+
+        let rootViewController = UITabBarController()
+
+        let homeViewController = UIViewController()
+        homeViewController.tabBarItem.image = .home
+        homeViewController.view.backgroundColor = .background
+
+        let exploreViewController = UIViewController()
+        exploreViewController.tabBarItem.image = .explore
+        exploreViewController.view.backgroundColor = .background
+
+        let favoriteViewController = UIViewController()
+        favoriteViewController.tabBarItem.image = .favorite
+        favoriteViewController.view.backgroundColor = .background
+
+        let profileViewController = UIViewController()
+        profileViewController.tabBarItem.image = .profile
+        profileViewController.view.backgroundColor = .background
+
+        rootViewController.viewControllers = [
+            homeViewController,
+            exploreViewController,
+            favoriteViewController,
+            profileViewController
+        ]
+
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = .background
+
+        rootViewController.tabBar.standardAppearance = tabBarAppearance
+        rootViewController.tabBar.scrollEdgeAppearance = tabBarAppearance
+
+        window?.rootViewController = rootViewController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
