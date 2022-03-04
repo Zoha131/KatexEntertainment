@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         homeViewController.tabBarItem.image = .home
         homeViewController.view.backgroundColor = .background
 
-        let exploreViewController = UIHostingController(rootView: ExploreScreen())
+        let exploreViewController = UIHostingController(rootView: MovieDetailScreen())
         exploreViewController.tabBarItem.image = .explore
         exploreViewController.view.backgroundColor = .background
 

@@ -43,7 +43,7 @@ struct ExploreScreen: View {
 
             ScrollView {
                 LazyVStack {
-
+                    //Staggered Grid
                 }
             }
         }
