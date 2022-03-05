@@ -8,7 +8,7 @@
 import Foundation
 
 struct MovieResponse: Codable {
-    let queryString: String
-    let results: [Movie]
+    let queryString: String?
+    let results: [Movie]?
     let errorMessage: String?
 }

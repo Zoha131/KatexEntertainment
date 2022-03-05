@@ -10,6 +10,7 @@ import Foundation
 struct ExploreState {
     var suggestions: Async<[Movie]> = .uninitialized
     var popularMovies: Async<[Movie]> = .uninitialized
+    var searchMovies: Async<[Movie]> = .uninitialized
 }
 
 @MainActor
@@ -24,7 +25,14 @@ class ExploreViewModel: ObservableObject {
     @Published private(set) var state = ExploreState()
     @Published var query = ""
 
+    func clearQuery() {
+        query = ""
+        state.searchMovies = .uninitialized
+    }
+
     func loadPopularMovies() {
+        state.popularMovies = .loading(progress: 0)
+
         movieClient.getPopularMovies {[weak self] result in
             guard let self = self else {
                 return
@@ -33,11 +41,22 @@ class ExploreViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let movies):
-                    self.state.popularMovies = .success(value: Array(movies[..<6]))
+                    let lastIndex = min(6, movies.count)
+                    self.state.popularMovies = .success(value: Array(movies[..<lastIndex]))
                 case .failure(let error):
                     self.state.popularMovies = .failed(error: error)
                 }
             }
+        }
+    }
+
+    func searchMovies() async {
+        state.searchMovies = .loading(progress: 0)
+        do {
+            let movies = try await movieClient.searchMovie(query: query)
+            state.searchMovies = .success(value: movies)
+        } catch {
+            state.searchMovies = .failed(error: error)
         }
     }
 }

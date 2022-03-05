@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Movie: Codable {
+struct Movie: Codable, Identifiable {
     let id: String
     let image: String
     let title: String
     let description: String
-    let runtimeStr: String
+    let runtimeStr: String?
     let genres: String
-    let iMDBRating: String
+    let iMDBRating: String?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -29,9 +29,7 @@ struct Movie: Codable {
 
 extension Movie {
     var year: String {
-        let startIndex = description.index(after: description.startIndex)
-        let endIndex = description.index(before: description.endIndex)
         
-        return String(description[startIndex...endIndex])
+        return String(description.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: ""))
     }
 }

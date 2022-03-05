@@ -42,7 +42,7 @@ class MovieClientImp: MovieClient {
             do {
                 let result = try self.jsonDecoder.decode(MovieResponse.self, from: data)
 
-                completion(.success(result.results))
+                completion(.success(result.results ?? []))
             } catch {
                 completion(.failure(error))
             }
@@ -53,14 +53,14 @@ class MovieClientImp: MovieClient {
     func searchMovie(query: String) async throws -> [Movie] {
         let urlString = "\(baseUrl)/API/AdvancedSearch/\(securityKey)?keywords=\(query)"
 
-        guard let url = URL(string: urlString) else {
+        guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "") else {
             throw URLError(.badURL)
         }
 
         let (data, _) = try await urlSession.data(from: url)
         let result = try jsonDecoder.decode(MovieResponse.self, from: data)
 
-        return result.results
+        return result.results ?? []
     }
 
     func getMovieDetail(of id: String) async throws -> MovieDetail {

@@ -6,17 +6,20 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct SearchMovieView: View {
-    private let attributedTitle: AttributedString
+    private let movie: Movie
     private let query: String
+    private let attributedTitle: AttributedString
 
-    init(title: String, query: String){
+    init(movie: Movie, query: String){
+        self.movie = movie
         self.query = query
 
-        var attributedTitle = AttributedString(title)
+        var attributedTitle = AttributedString(movie.title)
 
-        if let range = attributedTitle.range(of: query) {
+        if let range = attributedTitle.range(of: query, options: [.caseInsensitive]) {
             attributedTitle[range].foregroundColor = .highlight
         }
 
@@ -26,28 +29,33 @@ struct SearchMovieView: View {
     var body: some View {
         HStack(spacing: 20) {
 
-            ZStack {
-
-
-            }
-            .frame(width: 148, height: 190)
-            .background(Color.pink)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay {
-                LinearGradient(
-                    colors: [.clear, .clear, .background.opacity(0.7)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-            }
+            KFImage
+                .url(URL(string: movie.image))
+                .placeholder {
+                    Image("placeholder")
+                        .resizable()
+                        .opacity(0.3)
+                }
+                .fade(duration: 0.25)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 148, height: 190)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .overlay {
+                    LinearGradient(
+                        colors: [.clear, .clear, .background.opacity(0.7)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                }
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(attributedTitle)
                     .font(.system(size: 18))
                     .foregroundColor(.white)
-                    .lineLimit(1)
+                    .lineLimit(2)
 
-                Text("2019 | Action, Fantasy")
+                Text("\(movie.year) | \(movie.genres)")
                     .font(.system(size: 14))
                     .foregroundColor(.gray)
                     .lineLimit(1)
@@ -57,7 +65,7 @@ struct SearchMovieView: View {
                         .foregroundColor(.yellow)
                         .font(.system(size: 14))
 
-                    Text("6.5")
+                    Text(movie.iMDBRating ?? "0.0")
                         .foregroundColor(.white)
                         .font(.system(size: 14))
                 }
@@ -77,14 +85,14 @@ struct SearchMovieView: View {
     }
 }
 
-struct SearchMovieView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            SearchMovieView(title: "Captain Marvel", query: "Marvel")
-                .padding(.horizontal, 32)
-
-            Spacer()
-        }
-        .background(Color.background)
-    }
-}
+//struct SearchMovieView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            SearchMovieView(title: "Captain Marvel", query: "Marvel")
+//                .padding(.horizontal, 32)
+//
+//            Spacer()
+//        }
+//        .background(Color.background)
+//    }
+//}
