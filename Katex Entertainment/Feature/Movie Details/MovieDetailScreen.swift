@@ -8,18 +8,24 @@
 import SwiftUI
 import Kingfisher
 
+protocol MovieDetailScreenDelegate: AnyObject {
+    func onBackTap()
+}
+
 struct MovieDetailScreen: View {
-    let imageUrl = "https://imdb-api.com/images/original/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_Ratio0.6837_AL_.jpg"
+    let movie: Movie
+    @StateObject var viewModel = MovieDetailViewModel()
+    weak var delegate: MovieDetailScreenDelegate?
 
     var body: some View {
         ZStack(alignment: .bottom) {
             ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(spacing: 12) {
                     GeometryReader { reader in
                         let global = reader.frame(in: .global)
 
                         KFImage
-                            .url(URL(string: imageUrl))
+                            .url(URL(string: movie.image))
                             .placeholder {
                                 Image("placeholder").opacity(0.3)
                             }
@@ -43,111 +49,36 @@ struct MovieDetailScreen: View {
                     .frame(height: UIScreen.main.bounds.width - 100)
                     
 
-                    VStack(alignment: .center, spacing: 12) {
-                        Text("Captain Marvel")
-                            .foregroundColor(.white)
-                            .font(.system(size: 32))
-                            .fontWeight(.medium)
-
-                        Text("2019 | Action, Fantasy | 2h 34min")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 18))
-                            .fontWeight(.heavy)
-
+                    switch viewModel.state.detail {
+                    case .success(let movieDetail):
+                        MovieDetailView(movieDetail: movieDetail)
+                            .padding(.bottom, 200)
+                    case .failed(_, _ ) :
                         HStack {
-                            Text("4.5")
-                                .foregroundColor(.white)
+                            Text("Failed to load")
 
-                            if let rating = Double("4.5"), let ratingInt = Int(rating) {
-                                let ratingEnd = rating > Double(ratingInt) ? ratingInt + 1 : ratingInt
-
-                                ForEach(0..<ratingEnd) { star in
-                                    Image(systemName: star < ratingInt ? "star.fill" : "star.leadinghalf.filled")
-                                        .foregroundColor(.yellow)
+                            Button("Try Again"){
+                                Task {
+                                    await viewModel.loadDetail(of: movie.id)
                                 }
                             }
                         }
-                        .font(.system(size: 14))
+                    default:
+                        ProgressView()
+                            .tint(.accent)
                     }
-                    .frame(maxWidth: .infinity)
-
-                    Text("Distributed by Walt Disney Studios Motion Pictures, it is the 21st film in the Marvel Cinematic Universe (MCU).")
-                        .font(.system(size: 16))
-                        .fontWeight(.heavy)
-                        .foregroundColor(.gray)
-                        .padding(.horizontal, 32)
-                        .padding(.vertical)
-
-
-                    Section {
-
-                        HStack(spacing: -15) {
-
-                            ZStack {
-
-                            }
-                            .frame(width: 44, height: 44)
-                            .background(Color.green)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.background, lineWidth: 2))
-
-                            ZStack {
-
-                            }
-                            .frame(width: 44, height: 44)
-                            .background(Color.red)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.background, lineWidth: 2))
-
-                            ZStack {
-
-                            }
-                            .frame(width: 44, height: 44)
-                            .background(Color.blue)
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.background, lineWidth: 2))
-
-                            ZStack {
-
-                            }
-                            .frame(width: 44, height: 44)
-                            .background(Color.yellow)
-                            .overlay {
-                                ZStack {
-                                    Color.background
-                                        .opacity(0.8)
-
-                                    Text("6+")
-                                        .font(.system(size: 16))
-                                        .foregroundColor(.white)
-                                }
-                            }
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.background, lineWidth: 2))
-
-                        }
-
-                    } header: {
-                        Text("Cast")
-                            .font(.system(size: 20))
-                            .foregroundColor(.white)
-
-                    }
-                    .padding(.horizontal, 32)
-
                 }
             }
 
             VStack {
                 HStack {
                     Button {
-
+                        delegate?.onBackTap()
                     } label: {
                         Image(systemName: "chevron.left")
                             .renderingMode(.template)
                             .foregroundColor(.white)
                             .frame(width: 14, height: 24)
-
                     }
 
                     Spacer()
@@ -198,12 +129,130 @@ struct MovieDetailScreen: View {
             .padding(.vertical)
             .background(Color.background)
         }
+        .task {
+            await viewModel.loadDetail(of: movie.id)
+        }
     }
 }
 
-struct MovieDetailScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        MovieDetailScreen()
-            .background(Color.background)
+//struct MovieDetailScreen_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MovieDetailScreen()
+//            .background(Color.background)
+//    }
+//}
+
+private struct MovieDetailView: View {
+    let movieDetail: MovieDetail
+
+    var body: some View {
+        VStack {
+            VStack(alignment: .center, spacing: 12) {
+                Text(movieDetail.title)
+                    .foregroundColor(.white)
+                    .font(.system(size: 32))
+                    .fontWeight(.medium)
+
+                Text("\(movieDetail.year) | \(movieDetail.genres) | \(movieDetail.runtimeStr)")
+                    .foregroundColor(.gray)
+                    .font(.system(size: 18))
+                    .fontWeight(.heavy)
+
+                HStack {
+                    Text(movieDetail.iMDBRating)
+                        .foregroundColor(.white)
+
+                    if let rating = Double(movieDetail.iMDBRating), let ratingInt = Int(rating) {
+                        let ratingEnd = rating > Double(ratingInt) ? ratingInt + 1 : ratingInt
+
+                        ForEach(0..<ratingEnd) { star in
+                            Image(systemName: star < ratingInt ? "star.fill" : "star.leadinghalf.filled")
+                                .foregroundColor(.yellow)
+                        }
+                    }
+                }
+                .font(.system(size: 14))
+            }
+            .frame(maxWidth: .infinity)
+
+            Text(movieDetail.plot)
+                .font(.system(size: 16))
+                .fontWeight(.heavy)
+                .foregroundColor(.gray)
+                .padding(.horizontal, 32)
+                .padding(.vertical)
+
+
+            Section {
+
+                CastView(actorList: movieDetail.actorList)
+
+            } header: {
+                Text("Cast")
+                    .font(.system(size: 20))
+                    .foregroundColor(.white)
+
+            }
+            .padding(.horizontal, 32)
+        }
+    }
+}
+
+private struct CastView: View {
+    let actorList: [Actor]
+    let end: Int
+    let moreCount: Int
+
+    init(actorList: [Actor]){
+        self.actorList = actorList
+
+        end = min(5, actorList.count)
+        moreCount = actorList.count - end
+    }
+
+    var body: some View {
+        HStack(spacing: -15) {
+            ForEach(0..<end-1) { id in
+                KFImage
+                    .url(URL(string: actorList[id].image))
+                    .placeholder {
+                        Image("placeholder")
+                            .resizable()
+                            .opacity(0.3)
+                    }
+                    .fade(duration: 0.25)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.background, lineWidth: 2))
+            }
+
+            KFImage
+                .url(URL(string: actorList[end-1].image))
+                .placeholder {
+                    Image("placeholder")
+                        .resizable()
+                        .opacity(0.3)
+                }
+                .fade(duration: 0.25)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 44, height: 44)
+                .overlay {
+                    ZStack {
+                        Color.background
+                            .opacity(0.8)
+
+                        Text("\(moreCount)+")
+                            .font(.system(size: 16))
+                            .foregroundColor(.white)
+                    }
+                }
+                .clipShape(Circle())
+                .overlay(Circle().stroke(Color.background, lineWidth: 2))
+
+            Spacer()
+        }
     }
 }

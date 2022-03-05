@@ -19,8 +19,6 @@ struct PopularMovieView: View {
                     Image("placeholder")
                         .resizable()
                         .opacity(0.3)
-
-                        //.clipped()
                 }
                 .fade(duration: 0.25)
                 .resizable()

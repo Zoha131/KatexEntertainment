@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Actor: Codable {
+struct Actor: Codable, Identifiable {
     let id: String
     let image: String
     let name: String

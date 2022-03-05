@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-protocol ExploreScreenDelegate {
-
+protocol ExploreScreenDelegate: AnyObject {
+    func onItemTap(movie: Movie)
 }
 
 struct ExploreScreen: View {
     @StateObject var viewModel = ExploreViewModel()
     @FocusState var searchFieldIsFocused: Bool
+    weak var delegate: ExploreScreenDelegate?
 
     var body: some View {
         VStack {
@@ -59,6 +60,9 @@ struct ExploreScreen: View {
                         if searchFieldIsFocused {
                             ForEach(0..<5) { movie in
                                 HistoryMovieView()
+                                    .onTapGesture {
+                                        //delegate?.onItemTap(movie: movie)
+                                    }
                             }
                             .padding(.horizontal, 32)
                             .padding(.bottom, 15)
@@ -84,7 +88,8 @@ struct ExploreScreen: View {
 
                         PopularExploreView(
                             popularMovies: viewModel.state.popularMovies,
-                            loadPopularMovies: { viewModel.loadPopularMovies() }
+                            loadPopularMovies: { viewModel.loadPopularMovies() },
+                            delegate: delegate
                         )
                     } else {
                         SearchExploreView(
@@ -94,7 +99,8 @@ struct ExploreScreen: View {
                                     await viewModel.searchMovies()
                                 }
                             },
-                            query: viewModel.query
+                            query: viewModel.query,
+                            delegate: delegate
                         )
                     }
                 }
@@ -116,6 +122,7 @@ struct ExploreScreen_Previews: PreviewProvider {
 private struct PopularExploreView: View {
     let popularMovies: Async<[Movie]>
     let loadPopularMovies: () -> ()
+    weak var delegate: ExploreScreenDelegate?
 
     var body: some View {
         switch popularMovies {
@@ -128,6 +135,9 @@ private struct PopularExploreView: View {
 
                     ForEach(indices, id: \.self) { index in
                         PopularMovieView(movie: movies[index])
+                            .onTapGesture {
+                                delegate?.onItemTap(movie: movies[index])
+                            }
                     }
                     .padding(.bottom, 15)
                 }
@@ -139,6 +149,9 @@ private struct PopularExploreView: View {
 
                     ForEach(indices, id: \.self) { index in
                         PopularMovieView(movie: movies[index])
+                            .onTapGesture {
+                                delegate?.onItemTap(movie: movies[index])
+                            }
                     }
                     .padding(.bottom, 15)
                 }
@@ -162,6 +175,7 @@ private struct SearchExploreView: View {
     let movies: Async<[Movie]>
     let searchMovies: () -> ()
     let query: String
+    weak var delegate: ExploreScreenDelegate?
 
     var body: some View {
         switch movies {
@@ -171,6 +185,9 @@ private struct SearchExploreView: View {
             } else {
                 ForEach(movies) { movie in
                     SearchMovieView(movie: movie, query: query)
+                        .onTapGesture {
+                            delegate?.onItemTap(movie: movie)
+                        }
                 }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 15)

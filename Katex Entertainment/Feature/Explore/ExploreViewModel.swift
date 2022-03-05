@@ -17,7 +17,7 @@ struct ExploreState {
 class ExploreViewModel: ObservableObject {
     let movieClient = MovieClientImp(
         baseUrl: "https://imdb-api.com",
-        securityKey: "k_i6f1t24j",
+        securityKey: "k_36fx4wxd",
         urlSession: .shared,
         jsonDecoder: JSONDecoder()
     )
@@ -31,6 +31,10 @@ class ExploreViewModel: ObservableObject {
     }
 
     func loadPopularMovies() {
+        if case .success(_) = state.popularMovies {
+            return
+        }
+
         state.popularMovies = .loading(progress: 0)
 
         movieClient.getPopularMovies {[weak self] result in

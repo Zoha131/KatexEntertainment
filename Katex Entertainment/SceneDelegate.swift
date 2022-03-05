@@ -12,6 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    let appNavigator = AppNavigator()
+
     func scene(
         _ scene: UIScene,
         willConnectTo session: UISceneSession,
@@ -19,42 +21,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
         window = UIWindow(windowScene: windowScene)
 
-        let rootViewController = UITabBarController()
+        appNavigator.startNavigation()
 
-        let homeViewController = UIViewController()
-        homeViewController.tabBarItem.image = .home
-        homeViewController.view.backgroundColor = .background
-
-        let exploreViewController = UIHostingController(rootView: ExploreScreen())
-        exploreViewController.tabBarItem.image = .explore
-        exploreViewController.view.backgroundColor = .background
-
-        let favoriteViewController = UIViewController()
-        favoriteViewController.tabBarItem.image = .favorite
-        favoriteViewController.view.backgroundColor = .background
-
-        let profileViewController = UIViewController()
-        profileViewController.tabBarItem.image = .profile
-        profileViewController.view.backgroundColor = .background
-
-        rootViewController.viewControllers = [
-            homeViewController,
-            exploreViewController,
-            favoriteViewController,
-            profileViewController
-        ]
-        rootViewController.selectedIndex = 1
-
-        let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.backgroundColor = .background
-
-        rootViewController.tabBar.standardAppearance = tabBarAppearance
-        rootViewController.tabBar.scrollEdgeAppearance = tabBarAppearance
-
-        window?.rootViewController = rootViewController
+        window?.rootViewController = appNavigator.rootViewController
         window?.makeKeyAndVisible()
     }
 
@@ -85,7 +56,63 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
 
+class AppNavigator {
+    let rootViewController = UITabBarController()
+
+    func startNavigation() {
+        let homeViewController = UIViewController()
+        homeViewController.tabBarItem.image = .home
+        homeViewController.view.backgroundColor = .background
+
+        let exploreViewController = UIHostingController(rootView: ExploreScreen(delegate: self))
+        exploreViewController.tabBarItem.image = .explore
+        exploreViewController.view.backgroundColor = .background
+
+        let favoriteViewController = UIViewController()
+        favoriteViewController.tabBarItem.image = .favorite
+        favoriteViewController.view.backgroundColor = .background
+
+        let profileViewController = UIViewController()
+        profileViewController.tabBarItem.image = .profile
+        profileViewController.view.backgroundColor = .background
+
+        rootViewController.viewControllers = [
+            homeViewController,
+            exploreViewController,
+            favoriteViewController,
+            profileViewController
+        ]
+        rootViewController.selectedIndex = 1
+
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = .background
+
+        rootViewController.tabBar.standardAppearance = tabBarAppearance
+        rootViewController.tabBar.scrollEdgeAppearance = tabBarAppearance
+    }
+}
+
+extension AppNavigator: ExploreScreenDelegate {
+    func onItemTap(movie: Movie) {
+        let detailView = MovieDetailScreen(movie: movie, delegate: self)
+        let viewController = UIHostingController(rootView: detailView)
+        viewController.view.backgroundColor = .background
+
+        viewController.modalPresentationStyle = .fullScreen
+        //viewController.modalTransitionStyle = .flipHorizontal
+
+        rootViewController.present(viewController, animated: true) {
+
+        }
+    }
+}
+
+extension AppNavigator: MovieDetailScreenDelegate {
+    func onBackTap() {
+        rootViewController.dismiss(animated: true) {
+
+        }
+    }
+}

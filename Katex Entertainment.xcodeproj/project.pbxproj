@@ -27,6 +27,7 @@
 		C466D10427D228CB00288C8D /* SearchMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C466D10327D228CB00288C8D /* SearchMovieView.swift */; };
 		C47D3B1527D292AE006552C8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C47D3B1427D292AE006552C8 /* Kingfisher */; };
 		C47D3B1727D2AC78006552C8 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47D3B1627D2AC77006552C8 /* Async.swift */; };
+		C4ABA69C27D340780021B13C /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ABA69B27D340780021B13C /* MovieDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		C466D10127D228BD00288C8D /* PopularMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMovieView.swift; sourceTree = "<group>"; };
 		C466D10327D228CB00288C8D /* SearchMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieView.swift; sourceTree = "<group>"; };
 		C47D3B1627D2AC77006552C8 /* Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
+		C4ABA69B27D340780021B13C /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				C466D0F627D2052F00288C8D /* MovieDetailScreen.swift */,
+				C4ABA69B27D340780021B13C /* MovieDetailViewModel.swift */,
 			);
 			path = "Movie Details";
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				C466D0DE27D13D8200288C8D /* ExploreScreen.swift in Sources */,
 				C466D0D927D1392400288C8D /* Resource.swift in Sources */,
 				C466D0EB27D1EC0C00288C8D /* MovieClient.swift in Sources */,
+				C4ABA69C27D340780021B13C /* MovieDetailViewModel.swift in Sources */,
 				C466D0E727D1D82C00288C8D /* MovieDetail.swift in Sources */,
 				C466D0F327D2014E00288C8D /* MovieClientImp.swift in Sources */,
 				C466D0ED27D1FBD200288C8D /* MovieResponse.swift in Sources */,
